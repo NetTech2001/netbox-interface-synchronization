@@ -8,7 +8,7 @@ from django.contrib import messages
 from .utils import UnifiedInterface, natural_keys
 from .forms import InterfaceComparisonForm
 
-config = settings.PLUGINS_CONFIG['netbox4_interface_sync']
+config = settings.PLUGINS_CONFIG['netbox_interface_synchronization']
 
 
 class InterfaceComparisonView(LoginRequiredMixin, PermissionRequiredMixin, View):
