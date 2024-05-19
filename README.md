@@ -35,7 +35,7 @@ Mark the required actions with the checkboxes and click "Apply".
 If you want to override the default values, configure the `PLUGINS_CONFIG` in your `configuration.py`:
 ```
 PLUGINS_CONFIG = {
-    'netbox4_interface_sync': {
+    'netbox_interface_synchronization': {
         'exclude_virtual_interfaces': True
     }
 }
