@@ -1,0 +1,161 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}{{ device }} - Interface comparison{% endblock %}
+{% block header %}
+    <nav class="breadcrumb-container px-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}">Devices</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}?site={{ device.site.slug }}">{{ device.site }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device' pk=device.id %}">{{ device }}</a></li>
+        </ol>
+    </nav>
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<style>
+    .checkbox-group {
+        position: absolute;
+    }
+</style>
+<script>
+function toggle(event) {
+  event = event || window.event;
+  var src = event.target || event.srcElement || event;
+  checkboxes = document.getElementsByName(src.id);
+  for(var checkbox of checkboxes) checkbox.checked = src.checked;
+}
+
+function uncheck(event) {
+  event = event || window.event;
+  var src = event.target || event.srcElement || event;
+  if (src.checked == false) {
+    document.getElementById(src.name).checked = false;
+  }
+}
+</script>
+
+<p>
+{% if templates_count == interfaces_count %}
+    The Device and Device Type have the same number of Interfaces.
+{% else %}
+    The Device and Device Type have a different number of Interfaces.<br>
+    Device: {{ interfaces_count }}<br>
+    Device Type: {{ templates_count }}
+{% endif %}
+</p>
+
+<form method="post">
+    <!-- Interface templates -->
+    {% csrf_token %}
+    <table class="table" style="width: 50%; float: left;">
+        <tr>
+            <th colspan="2">Device Type</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>
+                <label class="checkbox-group">
+                    <input type="checkbox" id="add_to_device" onclick="toggle(this)">
+                    Add To The Device
+                </label>
+            </th>
+        </tr>
+        {% for template, interface in comparison_items %}
+        {% if template %}
+        <tr {% if not interface %}class="success" data-mark-connected="true"{% endif %}>
+            <td>
+                {% if interface and template.name != interface.name %}
+                <span style="background-color: #cde8c2">{{ template.name }}</span>
+                {% else %}
+                {{ template.name }}
+                {% endif %}
+            </td>
+            <td>{{ template.type_display }}</td>
+            <td>
+                {% if not interface %}
+                <label class="checkbox-group">
+                    <input type="checkbox" name="add_to_device" value="{{ template.id }}" onclick="uncheck(this)">
+                    Add To Device
+                </label>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+    <table class="table" style="width: 50%; float: right;">
+        <!-- Interfaces -->
+        <tr>
+            <th colspan="2">Device</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>
+                <label class="checkbox-group">
+                    <input type="checkbox" id="remove_from_device" onclick="toggle(this)">
+                    Remove
+                </label>
+            </th>
+            <th>
+                <label class="checkbox-group">
+                    <input type="checkbox" id="fix_name" onclick="toggle(this)">
+                    Fix Name
+                </label>
+            </th>
+        </tr>
+        {% for template, interface in comparison_items %}
+        {% if interface %}
+        <tr {% if not template %}class="danger" data-enabled="disabled"{% endif %}>
+            <td>
+                {% if template and template.name != interface.name %}
+                <span style="background-color: #eab2b2">{{ interface.name }}</span>
+                {% else %}
+                {{ interface.name }}
+                {% endif %}
+            </td>
+            <td>{{ interface.type_display }}</td>
+            <td>
+                {% if not template %}
+                <label class="checkbox-group">
+                    <input type="checkbox" name="remove_from_device" value="{{ interface.id }}" onclick="uncheck(this)">
+                    Remove
+                </label>
+                {% endif %}
+            </td>
+            <td>
+                {% if template and template.name != interface.name %}
+                <label class="checkbox-group">
+                    <input type="checkbox" name="fix_name" value="{{ interface.id }}" onclick="uncheck(this)">
+                    Fix Name
+                </label>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    <div class="text-right">
+        <input type="submit" value="Apply" class="btn btn-primary">
+    </div>
+</form>
+
+{% endblock %}
