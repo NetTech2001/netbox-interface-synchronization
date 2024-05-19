@@ -1,6 +1,6 @@
 # netbox-interface-synchronization
 ## Overview
-This plugin allows you to compare and synchronize interfaces between devices and device types in NetBox 4. It can be useful for finding and correcting inconsistencies between interfaces.
+This plugin allows you to compare and synchronize interfaces between devices and device types in NetBox. It can be useful for finding and correcting inconsistencies between interfaces.
 ## Compatibility
 Tested with NetBox versions 4.0.0, 4.0.1, 4.0.2.  This plugin is not compatible with Netbox 2 or 3
 ## Installation
