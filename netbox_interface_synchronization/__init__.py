@@ -3,8 +3,8 @@ from netbox.plugins import PluginConfig
 
 class Config(PluginConfig):
     name = 'netbox_interface_synchronization'
-    verbose_name = 'NetBox 4 Interface Synchronization'
-    description = 'Syncing existing interfaces with the interfaces from a new device type in NetBox 4'
+    verbose_name = 'NetBox Interface Synchronization'
+    description = 'Syncing existing interfaces with the interfaces from a new device type in NetBox'
     version = '4.0.0'
     author = 'Keith Knowles'
     author_email = 'mkknowles@outlook.com'
