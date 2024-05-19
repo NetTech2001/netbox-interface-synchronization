@@ -4,7 +4,7 @@
 {% block header %}
     <nav class="breadcrumb-container px-3" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}">Devices</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}">Device</a></li>
             <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}?site={{ device.site.slug }}">{{ device.site }}</a></li>
             <li class="breadcrumb-item"><a href="{% url 'dcim:device' pk=device.id %}">{{ device }}</a></li>
         </ol>
@@ -37,11 +37,11 @@ function uncheck(event) {
 
 <p>
 {% if templates_count == interfaces_count %}
-    The Device and Device Type have the same number of Interfaces.
+    The Device Type and Device have the same Interfaces.
 {% else %}
-    The Device and Device Type have a different number of Interfaces.<br>
-    Device: {{ interfaces_count }}<br>
-    Device Type: {{ templates_count }}
+    The Device Type and Device have different Interfaces.<br>
+    Device Type: {{ templates_count }}<br>
+    Device: {{ interfaces_count }}
 {% endif %}
 </p>
 
@@ -59,7 +59,7 @@ function uncheck(event) {
             <th>
                 <label class="checkbox-group">
                     <input type="checkbox" id="add_to_device" onclick="toggle(this)">
-                    Add To The Device
+                    Add
                 </label>
             </th>
         </tr>
@@ -78,7 +78,7 @@ function uncheck(event) {
                 {% if not interface %}
                 <label class="checkbox-group">
                     <input type="checkbox" name="add_to_device" value="{{ template.id }}" onclick="uncheck(this)">
-                    Add To Device
+                    Add
                 </label>
                 {% endif %}
             </td>
