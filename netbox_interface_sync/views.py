@@ -45,7 +45,7 @@ class InterfaceComparisonView(LoginRequiredMixin, PermissionRequiredMixin, View)
 
         comparison_items = list(zip(comparison_templates, comparison_interfaces))
         return render(
-            request, "netbox4_interface_sync/interface_comparison.html",
+            request, "netbox_interface_synchronization/interface_comparison.html",
             {
                 "comparison_items": comparison_items,
                 "templates_count": len(interface_templates),

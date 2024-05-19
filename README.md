@@ -1,4 +1,4 @@
-# netbox4-interface-sync
+# netbox-interface-synchronization
 ## Overview
 This plugin allows you to compare and synchronize interfaces between devices and device types in NetBox 4. It can be useful for finding and correcting inconsistencies between interfaces.
 ## Compatibility
@@ -10,7 +10,7 @@ source /opt/netbox/venv/bin/activate
 ```
 Install the plugin from PyPI:
 ```
-pip install netbox4-interface-sync
+pip install netbox-interface-synchronization
 ```
 or clone this repository, then go to the folder with it and install the plugin:
 ```
@@ -19,7 +19,7 @@ pip install .
 To enable to plugin, add the plugin's name to the `PLUGINS` list in `configuration.py` (it's usually located in `/opt/netbox/netbox/netbox/`) like so:
 ```
 PLUGINS = [
-    'netbox4_interface_sync'
+    'netbox_interface_synchronization'
 ]
 ```
 Don't forget to restart NetBox:

@@ -4,8 +4,8 @@ with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='netbox4-interface-sync',
-    version='4.0.2',
+    name='netbox-interface-synchronization',
+    version='4.0.0',
     description='Syncing existing interfaces with the interfaces from a new device type in NetBox 4',
     long_description=long_description,
     long_description_content_type='text/markdown',
