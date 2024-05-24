@@ -1,8 +1,8 @@
 # netbox-interface-synchronization
 ## Overview
-This plugin allows you to compare and synchronize interfaces between devices and device types in NetBox. It can be useful for finding and correcting inconsistencies between interfaces.
+This plugin allows you to compare and synchronize interface names and types between devices and device types in NetBox. It can be useful for finding and correcting inconsistencies between interfaces when changing the device type.
 ## Compatibility
-Tested with NetBox versions 4.0.0, 4.0.1, 4.0.2.  This plugin is not compatible with Netbox 2 or 3
+Tested with NetBox versions 4.0.0 - 4.0.3.  This plugin is not compatible with Netbox 2 or 3
 ## Installation
 If your NetBox 4 installation uses virtualenv, activate it like this:
 ```
@@ -27,7 +27,7 @@ Don't forget to restart NetBox:
 sudo systemctl restart netbox
 ```
 ## Usage
-To sync the interfaces, edit the device and set the new device type and save the device. Then find the "Sync Interfaces" button:
+To sync the interfaces, edit the device and set the new device type and save the device. Then find the "Sync Interfaces" button at the bottom of the page:
 ![Device page](docs/images/1_device_page.png)
 Mark the required actions with the checkboxes and click "Apply".
 ![Interface comparison](docs/images/2_interface_comparison.png)
