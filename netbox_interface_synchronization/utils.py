@@ -24,6 +24,7 @@ class UnifiedInterface:
     name: str
     type: str
     type_display: str
+    mgmt_only: bool
     is_template: bool = False
 
     def __eq__(self, other):

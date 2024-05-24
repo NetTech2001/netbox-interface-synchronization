@@ -37,9 +37,9 @@ function uncheck(event) {
 
 <p>
 {% if templates_count == interfaces_count %}
-    The Device Type and Device have the same Interfaces.
+    The Device Type and Device have the same number of Interfaces.
 {% else %}
-    The Device Type and Device have different Interfaces.<br>
+    The Device Type and Device have a different number of Interfaces.<br>
     Device Type: {{ templates_count }}<br>
     Device: {{ interfaces_count }}
 {% endif %}
@@ -154,7 +154,7 @@ function uncheck(event) {
         {% endfor %}
     </table>
     <div class="text-right">
-        <input type="submit" value="Apply" class="btn btn-primary">
+        <input type="submit" value="Apply Changes" class="btn btn-green">
     </div>
 </form>
 
