@@ -2,7 +2,7 @@
 ## Overview
 This plugin allows you to compare and synchronize interface names and types between devices and device types in NetBox. It can be useful for finding and correcting inconsistencies between interfaces when changing the device type.
 ## Compatibility
-Tested with NetBox versions 4.0.0 - 4.0.3.  This plugin is not compatible with Netbox 2 or 3
+Tested with NetBox versions 4.0.0 - 4.1.2  This plugin is not compatible with Netbox 2 or 3
 ## Installation
 If your NetBox 4 installation uses virtualenv, activate it like this:
 ```
