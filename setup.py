@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='netbox-interface-synchronization',
-    version='4.0.3',
+    version='4.1.4',
     description='Syncing existing interfaces with the interfaces from a device type template in NetBox 4+',
     long_description=long_description,
     long_description_content_type='text/markdown',
