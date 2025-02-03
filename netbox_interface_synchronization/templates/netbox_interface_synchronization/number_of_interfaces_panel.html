@@ -3,7 +3,7 @@
     <div class="card-body">
         Total Interfaces: {{ interfaces|length }}<br>
         {% if config.exclude_virtual_interfaces %}
-        Pysical Interfaces: {{ real_interfaces|length }}<br>
+        Physical Interfaces: {{ real_interfaces|length }}<br>
         {% endif %}
         Interfaces in the assigned Device Type: {{ interface_templates|length }}
     </div>
