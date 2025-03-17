@@ -1,0 +1,65 @@
+{% if perms.dcim.change_device %}
+<div class="dropdown">
+    <button id="add-device-components" type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Device type sync
+    </button>
+    <ul class="dropdown-menu" aria-labeled-by="add-device-components">
+        {% if perms.dcim.add_consoleport %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:consoleport_comparison' device_id=device.id %}">
+                    Console Ports
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_consoleserverport %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:consoleserverport_comparison' device_id=device.id %}">
+                    Console Server Ports
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_powerport %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:powerport_comparison' device_id=device.id %}">
+                    Power Ports
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_poweroutlet %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:poweroutlet_comparison' device_id=device.id %}">
+                    Power Outlets
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_interface %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:interface_comparison' device_id=device.id %}">
+                    Interfaces
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_frontport %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:frontport_comparison' device_id=device.id %}">
+                    Front Ports
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_rearport %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:rearport_comparison' device_id=device.id %}">
+                    Rear Ports
+                </a>
+            </li>
+        {% endif %}
+        {% if perms.dcim.add_devicebay %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:devicebay_comparison' device_id=device.id %}">
+                    Device Bays
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}

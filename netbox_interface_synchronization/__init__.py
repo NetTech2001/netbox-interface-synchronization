@@ -9,7 +9,12 @@ class Config(PluginConfig):
     author = 'Keith Knowles'
     author_email = 'mkknowles@outlook.com'
     default_settings = {
-        'exclude_virtual_interfaces': True
+        'exclude_virtual_interfaces': True,
+        'include_interfaces_panel': False,
+        # Compare description during diff
+        # If compare is true, description will also be synced to device
+        # Otherwise not.
+        'compare_description': True
     }
 
 
