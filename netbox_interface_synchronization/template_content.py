@@ -3,7 +3,10 @@ from dcim.models import Interface, InterfaceTemplate
 
 
 class DeviceViewExtension(PluginTemplateExtension):
-    models = ["dcim.device"]
+
+    model = "dcim.device"
+    models = [model]
+
 
     def buttons(self):
         """Implements a compare interfaces button at the top of the page"""
