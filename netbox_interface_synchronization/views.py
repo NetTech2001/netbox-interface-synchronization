@@ -78,9 +78,13 @@ class InterfaceComparisonView(LoginRequiredMixin, PermissionRequiredMixin, View)
 
             # Add selected interfaces to the device and count them
             add_to_device_interfaces = InterfaceTemplate.objects.filter(id__in=add_to_device)
-            interfaces_created = len(Interface.objects.bulk_create([
-                Interface(device=device, name=i.name, type=i.type, mgmt_only=i.mgmt_only) for i in add_to_device_interfaces
-            ]))
+
+            interfaces_created = 0
+            for i in add_to_device_interfaces:
+                ni = Interface(device=device, name=i.name, type=i.type, mgmt_only=i.mgmt_only)
+                ni.full_clean()
+                ni.save()
+                interfaces_created = interfaces_created + 1
 
             # Getting and validating a list of interfaces to rename
             fix_name_interfaces = filter(lambda i: str(i.id) in request.POST.getlist("fix_name"), interfaces)
