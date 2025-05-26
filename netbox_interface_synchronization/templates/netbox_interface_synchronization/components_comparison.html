@@ -1,0 +1,158 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}{{ device }} - {{ component_type }} comparison{% endblock %}
+{% block header %}
+    <nav class="breadcrumb-container px-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}">Devices</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device_list' %}?site={{ device.site.slug }}">{{ device.site }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dcim:device' pk=device.id %}">{{ device }}</a></li>
+        </ol>
+    </nav>
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<style>
+    .caption-red {
+        caption-side: top;
+        color: red;
+    }
+
+    .caption-green {
+        caption-side: top;
+        color: green;
+    }
+</style>
+<script>
+function toggle(event) {
+  event = event || window.event;
+  var src = event.target || event.srcElement || event;
+  checkboxes = document.getElementsByName(src.id);
+  for(var checkbox of checkboxes) checkbox.checked = src.checked;
+}
+
+function uncheck(event) {
+  event = event || window.event;
+  var src = event.target || event.srcElement || event;
+  if (src.checked == false) {
+    document.getElementById(src.name).checked = false;
+  }
+}
+</script>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="table-responsive-xl">
+        <table class="table table-hover table-bordered">
+            {% if templates_count == components_count %}
+            <caption class="caption-green">
+                The device and device type have the same number of {{ component_type }}.
+            </caption>
+            {% else %}
+            <caption class="caption-red">
+                The device and device type have different number of {{ component_type|lower }}.<br>
+                Device: {{ components_count }}<br>
+                Device type: {{ templates_count }}
+            </caption>
+            {% endif %}
+            <thead>
+            <tr>
+                <th scope="col" colspan="2">Device type</th>
+                <th scope="col">Actions</th>
+                <th scope="col" colspan="2">Device</th>
+                <th scope="col" colspan="2">Actions</th>
+            </tr>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Attributes</th>
+                <th scope="col">
+                    <label>
+                        <input type="checkbox" id="add_to_device" onclick="toggle(this)">
+                        Add to the device
+                    </label>
+                </th>
+                <th scope="col">Name</th>
+                <th scope="col">Attributes</th>
+                <th scope="col">
+                    <label>
+                        <input type="checkbox" id="remove_from_device" onclick="toggle(this)">
+                        Remove
+                    </label>
+                </th>
+                <th scope="col">
+                    <label>
+                        <input type="checkbox" id="fix_name" onclick="toggle(this)">
+                        Fix the name
+                    </label>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for component_template, component in comparison_items %}
+                <tr>
+                {% if component_template %}
+                    <th scope="row" {% if not component %}class="table-danger"{% endif %}>
+                        {% if component and component_template.name != component.name %}
+                        <span style="background-color: #eab2b2">{{ component_template.name }}</span>
+                        {% else %}
+                        {{ component_template.name }}
+                        {% endif %}
+                    </th>
+                    <td style="white-space:pre" {% if not component %}class="table-danger"{% endif %}>{{ component_template }}</td>
+                    <td {% if not component %}class="table-danger"{% endif %}>
+                        {% if not component %}
+                        <label>
+                            <input type="checkbox" name="add_to_device" value="{{ component_template.id }}" onclick="uncheck(this)">
+                            Add to device
+                        </label>
+                        {% endif %}
+                    </td>
+                {% else %}
+                    <th scope="row">&nbsp;</th>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                {% endif %}
+
+                {% if component %}
+                    <th scope="row" {% if not component_template %}class="table-success"{% endif %}>
+                        {% if component_template and component_template.name != component.name %}
+                        <span style="background-color: #cde8c2">{{ component.name }}</span>
+                        {% else %}
+                        {{ component.name }}
+                        {% endif %}
+                    </th>
+                    <td style="white-space:pre" {% if not component_template %}class="table-success"{% endif %}>{{ component }}</td>
+                    <td {% if not component_template %}class="table-success"{% endif %}>
+                        {% if not component_template %}
+                        <label>
+                            <input type="checkbox" name="remove_from_device" value="{{ component.id }}" onclick="uncheck(this)">
+                            Remove
+                        </label>
+                        {% endif %}
+                    </td>
+                    <td {% if not component_template %}class="table-success"{% endif %}>
+                        {% if component_template and component_template.name != component.name %}
+                        <label>
+                            <input type="checkbox" name="fix_name" value="{{ component.id }}" onclick="uncheck(this)">
+                            Fix name
+                        </label>
+                        {% endif %}
+                    </td>
+                {% else %}
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <input type="submit" value="Apply" class="btn btn-primary" style="float: right;">
+    </div>
+</form>
+
+{% endblock %}

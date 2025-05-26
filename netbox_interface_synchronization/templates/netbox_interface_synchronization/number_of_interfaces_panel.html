@@ -1,10 +1,12 @@
-<div class="card">
-    <h5 class="card-header">Number of Interfaces</h5>
-    <div class="card-body">
-        Total Interfaces: {{ interfaces|length }}<br>
-        {% if config.exclude_virtual_interfaces %}
-        Physical Interfaces: {{ real_interfaces|length }}<br>
-        {% endif %}
-        Interfaces in the assigned Device Type: {{ interface_templates|length }}
+{% if config.include_interfaces_panel %}
+    <div class="card">
+        <h5 class="card-header">Number of interfaces</h5>
+        <div class="card-body">
+            Total interfaces: {{ interfaces|length }}<br>
+            {% if config.exclude_virtual_interfaces %}
+            Non-virtual interfaces: {{ real_interfaces|length }}<br>
+            {% endif %}
+            Interfaces in the assigned device type: {{ interface_templates|length }}
+        </div>
     </div>
-</div>
+{% endif %}
