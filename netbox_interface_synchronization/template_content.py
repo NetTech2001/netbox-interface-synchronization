@@ -9,7 +9,7 @@ class DeviceViewExtension(PluginTemplateExtension):
     def buttons(self):
         """Implements a compare interfaces button at the top of the page"""
         obj = self.context['object']
-        return self.render("netbox_interface_synchronization/compare_interfaces_button.html", extra_context={
+        return self.render("netbox_interface_synchronization/compare_components_button.html", extra_context={
             "device": obj
         })
 
