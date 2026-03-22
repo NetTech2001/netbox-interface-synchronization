@@ -32,7 +32,7 @@ Don't forget to restart NetBox:
 sudo systemctl restart netbox
 ```
 ## Usage
-To sync the components, edit the device and set the new device type and save the device. Then find the "**Sync Components**" button at the top of the page to select teh component you would like to update:
+To sync the components, edit the device and set the new device type and save the device. Then find the **Sync Components** button at the top of the page to select the component you would like to update:
 ![Device page](docs/images/1_device_page.png)
 Interfaces - Mark the required actions with the checkboxes and click "Apply" at the bottom of the page.
 ![Interface comparison](docs/images/2_interface_comparison.png)
