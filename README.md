@@ -32,10 +32,12 @@ Don't forget to restart NetBox:
 sudo systemctl restart netbox
 ```
 ## Usage
-To sync the components, edit the device and set the new device type and save the device. Then find the "Sync Components" button at the bottom of the page:
+To sync the components, edit the device and set the new device type and save the device. Then find the "Sync Components" button at the bottom of the page to select teh component you would like to update:
 ![Device page](docs/images/1_device_page.png)
-Mark the required actions with the checkboxes and click "Apply".
+Interfaces - Mark the required actions with the checkboxes and click "Apply" at the bottom of the page.
 ![Interface comparison](docs/images/2_interface_comparison.png)
+Components - Mark the required actions with the checkboxes and click "Apply".
+![Interface comparison](docs/images/3_console_ports.png)
 ### Plugin Settings
 If you want to override the default values, configure the `PLUGINS_CONFIG` in your `configuration.py`:
 ```
