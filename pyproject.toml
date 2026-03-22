@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netbox-interface-synchronization"
+version = "4.5.1"
+authors = [
+    {name = "Keith Knowles", email = "you@example.com"},
+    {name = "Bastian Leicht", email = "you@example.com"},
+    {name = "Chris Russel", email = "you@example.com"},
+    {name = "Antoine Keranflech", email = "you@example.com"},
+]
+description = "This plugin allows you to compare and synchronize component names and types between devices and device types in NetBox 4+"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests>=2.25.0",
+    "numpy",
+]
+dynamic = ["license"]
+
+[project.urls]
+"Homepage" = "https://github.com/NetTech2001/netbox-interface-synchronization"
+"Bug Tracker" = "https://github.com/NetTech2001/netbox-interface-synchronization/issues"
