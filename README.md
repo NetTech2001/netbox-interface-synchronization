@@ -1,9 +1,12 @@
 # netbox-interface-synchronization
 ## Overview
+MAJOR UPDATE
 
-This plugin allows you to compare and synchronize interface names and types between devices and device types in NetBox 4+. It can be useful for finding and correcting inconsistencies between interfaces when changing the device type.
+Thanks to a massive contribution from bastianleicht the Interface Synchronization plugin has become the Component Synchronization plugin. 
+
+This plugin allows you to compare and synchronize component names and types between devices and device types in NetBox 4.3+. It can be useful for finding and correcting inconsistencies between components when changing the device type.
 ## Compatibility
-Tested with NetBox versions 4.3.1  This plugin is not compatible with Netbox 2 or 3
+Tested with NetBox versions 4.3.1-4.5  This plugin is not compatible with Netbox 2 or 3
 
 ## Installation
 If your NetBox 4 installation uses virtualenv, activate it like this:
