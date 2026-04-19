@@ -45,7 +45,7 @@ Choose the component type you would like to synchronize.
 Choose the required actions and click "Apply".
 ![Interface comparison](docs/images/2_interface_comparison.png)
 
-!{Console Port Comparison](docs/images/3_console)ports.png)
+!{Console Port Comparison](docs/images/3_console_ports.png)
 ### Plugin Settings
 If you want to override the default values, configure the `PLUGINS_CONFIG` in your `configuration.py`:
 ```
