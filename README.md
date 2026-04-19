@@ -1,13 +1,17 @@
 # netbox-interface-synchronization
 ## Overview
-**MAJOR UPDATE**
+4.5.8 - MINOR UPDATE
 
-Thanks to a massive contribution from @bastianleicht, based on the original netbox-interface-sync codebase by @rizlas and @drygdryg, the Interface Synchronization plugin now includes Component Synchronization.
+Module Bays are now synchronizable. 
 
-This plugin allows you to compare and synchronize interface and component names / types between existing devices and new device types in NetBox 4.3+. It can be useful for finding and correcting inconsistencies between interfaces and other device components when changing the Device Type in Netbox.
+---------------------------------------
+
+This plugin allows you to compare and synchronize component names and types between devices and device types in NetBox. 
+
+It can be very useful for finding and correcting inconsistencies between components when changing the device type.
 
 ## Compatibility
-Tested with NetBox versions 4.3.1+  This plugin is not compatible with Netbox 2 or 3. For those versions use the original netbox-interface-sync codebase by rizlas and drygdryg that this plugin was built on.
+Tested with Netbox 4.5.8  This plugin is not compatible with Netbox 2 or 3 but should work with any version of Netbox 4.3.1 or greater
 
 ## Installation
 If your NetBox 4 installation uses virtualenv, activate it like this:
@@ -33,12 +37,10 @@ Don't forget to restart NetBox:
 sudo systemctl restart netbox
 ```
 ## Usage
-To sync the components, edit the device and set the new device type and save the device. Then find the **Component Sync** button at the top of the page to select the component you would like to update:
+To sync the components, edit the device and set the new device type and save the device. Then find the "Sync Components" button at the bottom of the page:
 ![Device page](docs/images/1_device_page.png)
-Interfaces - Mark the required actions with the checkboxes and click "Apply" at the bottom of the page.
+Mark the required actions with the checkboxes and click "Apply".
 ![Interface comparison](docs/images/2_interface_comparison.png)
-Components - Mark the required actions with the checkboxes and click "Apply".
-![Interface comparison](docs/images/3_console_ports.png)
 ### Plugin Settings
 If you want to override the default values, configure the `PLUGINS_CONFIG` in your `configuration.py`:
 ```
