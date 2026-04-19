@@ -6,6 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
 config = settings.PLUGINS_CONFIG['netbox_interface_synchronization']
+from netbox.registry import registry
+from utilities.counters import update_counts
 
 
 def split(s):
@@ -108,6 +110,19 @@ def post_components(
             updated += 1
 
     created = len(ObjectType.objects.bulk_create(bulk_create))
+
+    # Bulk create bypasses model save signals used by CounterCacheField.
+    # Recalculate related cached counters for parent models (Device, etc.).
+    if created > 0:
+        try:
+            for field_name, counter_name in registry['counter_fields'].get(ObjectType, {}).items():
+                fk_field = ObjectType._meta.get_field(field_name)
+                parent_model = fk_field.related_model
+                related_query = fk_field.related_query_name()
+                update_counts(parent_model, counter_name, related_query)
+        except Exception:
+            # Be tolerant of missing registry entries or other issues
+            pass
 
     # Rename selected components
     fixed = 0
