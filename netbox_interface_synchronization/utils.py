@@ -6,8 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
 config = settings.PLUGINS_CONFIG['netbox_interface_synchronization']
-from netbox.registry import registry
-from utilities.counters import update_counts
 
 
 def split(s):
@@ -60,26 +58,32 @@ def get_components(request, device, components, unified_components, unified_comp
     )
 
 
+
 def post_components(
-    request, device, components, component_templates, ObjectType, ObjectTemplateType, unified_component, unified_component_templates, component_type
+    request,
+    device,
+    components,
+    component_templates,
+    ObjectType,
+    ObjectTemplateType,
+    unified_component,
+    unified_component_templates,
+    component_type,
 ):
     # Manually validating components and component templates lists
     add_to_device = filter(
         lambda i: i in component_templates.values_list("id", flat=True),
         map(int, filter(lambda x: x.isdigit(), request.POST.getlist("add_to_device"))),
     )
+
     remove_from_device = filter(
         lambda i: i in components.values_list("id", flat=True),
-        map(
-            int,
-            filter(lambda x: x.isdigit(), request.POST.getlist("remove_from_device")),
-        ),
+        map(int, filter(lambda x: x.isdigit(), request.POST.getlist("remove_from_device"))),
     )
 
-    # Remove selected component from the device and count them
+    # Remove selected components from device
     deleted = ObjectType.objects.filter(id__in=remove_from_device).delete()[0]
 
-    # Add selected components to the device and count them
     add_to_device_component = ObjectTemplateType.objects.filter(id__in=add_to_device)
 
     bulk_create = []
@@ -97,6 +101,11 @@ def post_components(
         except ObjectDoesNotExist:
             tmp = ObjectType()
             tmp.device = device
+
+            # REQUIRED for NetBox 4.x ModuleBay
+            if ObjectType.__name__ == "ModuleBay":
+                tmp.level = 0
+
             to_create = True
 
         for k in i.keys():
@@ -109,26 +118,16 @@ def post_components(
             tmp.save()
             updated += 1
 
-    created = len(ObjectType.objects.bulk_create(bulk_create))
-
-    # Bulk create bypasses model save signals used by CounterCacheField.
-    # Recalculate related cached counters for parent models (Device, etc.).
-    if created > 0:
-        try:
-            for field_name, counter_name in registry['counter_fields'].get(ObjectType, {}).items():
-                fk_field = ObjectType._meta.get_field(field_name)
-                parent_model = fk_field.related_model
-                related_query = fk_field.related_query_name()
-                update_counts(parent_model, counter_name, related_query)
-        except Exception:
-            # Be tolerant of missing registry entries or other issues
-            pass
+    # ? SAFE creation for MPTT models (ModuleBay)
+    created = 0
+    for obj in bulk_create:
+        obj.save()
+        created += 1
 
     # Rename selected components
     fixed = 0
     for component, component_comparison in unified_component:
         try:
-            # Try to extract a component template with the corresponding name
             corresponding_template = unified_component_templates[
                 unified_component_templates.index(component_comparison)
             ]
@@ -138,7 +137,7 @@ def post_components(
         except ValueError:
             pass
 
-    # Generating result message
+    # Result message
     message = []
     if created > 0:
         message.append(f"created {created} {component_type}")
@@ -148,6 +147,6 @@ def post_components(
         message.append(f"deleted {deleted} {component_type}")
     if fixed > 0:
         message.append(f"fixed {fixed} {component_type}")
-    messages.success(request, "; ".join(message).capitalize())
 
+    messages.success(request, "; ".join(message).capitalize())
     return redirect(request.path)

@@ -46,4 +46,9 @@ urlpatterns = (
         views.DeviceBayComparisonView.as_view(),
         name="devicebay_comparison",
     ),
+    path(
+        "modulebay-comparison/<int:device_id>/",
+        views.ModuleBayComparisonView.as_view(),
+        name="modulebay_comparison",
+    ),
 )

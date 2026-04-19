@@ -223,3 +223,9 @@ class DeviceBayComparison(ParentComparison):
     """A unified way to represent the device bay and device bay template"""
 
     is_template: bool = False
+
+@dataclass(frozen=True, eq=False)
+class ModuleBayComparison(ParentComparison):
+    """A unified way to represent the module bay and module bay template"""
+
+    is_template: bool = False

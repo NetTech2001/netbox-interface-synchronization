@@ -5,7 +5,7 @@ class NCSConfig(PluginConfig):
     name = 'netbox_interface_synchronization'
     verbose_name = 'NetBox Component Synchronization'
     description = 'Syncing existing component names and types with those from a new device type in NetBox'
-    version = '4.5.1'
+    version = '4.5.8'
     author = 'Keith Knowles, Bastian Leicht, Chris Russell, Antoine Keranflech'
     author_email = 'NetTech2001@github.com'
     default_settings = {
