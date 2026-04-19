@@ -1,7 +1,9 @@
 {% if perms.dcim.change_device %}
 <div class="dropdown">
     <button id="compare-device-components" type="button" class="btn btn-purple dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Component Sync
+        <i class="mdi mdi-sync">
+	</i>
+		Component Sync
     </button>
     <ul class="dropdown-menu" aria-labeled-by="add-device-components">
         {% if perms.dcim.add_consoleport %}
@@ -57,6 +59,13 @@
             <li>
                 <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:devicebay_comparison' device_id=device.id %}">
                     Device Bays
+                </a>
+            </li>
+        {% endif %}
+	{% if perms.dcim.add_modulebay %}
+            <li>
+                <a class="dropdown-item" href="{% url 'plugins:netbox_interface_synchronization:modulebay_comparison' device_id=device.id %}">
+                     Module  Bays
                 </a>
             </li>
         {% endif %}
